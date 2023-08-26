@@ -1,0 +1,100 @@
+I/O devices. The central processor reads instructions from main memory during
+the instruction-fetch cycle and both reads and writes data from main memory
+during the data-fetch cycle (on a von Neumann architecture). As noted earlier,
+the main memory is generally the only large storage device that the CPU is able
+to address and access directly. For example, for the CPU to process data from
+disk, those data must first be transferred to main memory by CPU-generated
+I/O calls. In the same way, instructions must be in memory for the CPU to
+execute them.
+For a program to be executed, it must be mapped to absolute addresses and
+loaded into memory. As the program executes, it accesses program instructions
+and data from memory by generating these absolute addresses. Eventually,
+the program terminates, its memory space is declared available, and the next
+program can be loaded and executed.
+To improve both the utilization of the CPU and the speed of the computer’s
+response to its users, general-purpose computers must keep several programs
+in memory, creating a need for memory management. Many different memory-
+26 Chapter 1 Introduction
+management schemes are used. These schemes reflect various approaches, and
+the effectiveness of any given algorithm depends on the situation. In selecting a
+memory-management scheme for a specific system, we must take into account
+many factors—especially the hardware design of the system. Each algorithm
+requires its own hardware support.
+The operating system is responsible for the following activities in connection with memory management:
+• Keeping track of which parts of memory are currently being used and who
+is using them
+• Deciding which processes (or parts of processes) and data to move into
+and out of memory
+• Allocating and deallocating memory space as needed
+Memory-management techniques are discussed in Chapters 8 and 9.
+1.8 Storage Management
+To make the computer system convenient for users, the operating system
+provides a uniform, logical view of information storage. The operating system
+abstracts from the physical properties of its storage devices to define a logical
+storage unit, the file. The operating system maps files onto physical media and
+accesses these files via the storage devices.
+1.8.1 File-System Management
+File management is one of the most visible components of an operating system.
+Computers can store information on several different types of physical media.
+Magnetic disk, optical disk, and magnetic tape are the most common. Each
+of these media has its own characteristics and physical organization. Each
+medium is controlled by a device, such as a disk drive or tape drive, that
+also has its own unique characteristics. These properties include access speed,
+capacity, data-transfer rate, and access method (sequential or random).
+A file is a collection of related information defined by its creator. Commonly,
+files represent programs (both source and object forms) and data. Data files may
+be numeric, alphabetic, alphanumeric, or binary. Files may be free-form (for
+example, text files), or they may be formatted rigidly (for example, fixed fields).
+Clearly, the concept of a file is an extremely general one.
+The operating system implements the abstract concept of a file by managing
+mass-storage media, such as tapes and disks, and the devices that control them.
+In addition, files are normally organized into directories to make them easier
+to use. Finally, when multiple users have access to files, it may be desirable
+to control which user may access a file and how that user may access it (for
+example, read, write, append).
+The operating system is responsible for the following activities in connection with file management:
+• Creating and deleting files
+1.8 Storage Management 27
+• Creating and deleting directories to organize files
+• Supporting primitives for manipulating files and directories
+• Mapping files onto secondary storage
+• Backing up files on stable (nonvolatile) storage media
+File-management techniques are discussed in Chapters 11 and 12.
+1.8.2 Mass-Storage Management
+As we have already seen, because main memory is too small to accommodate
+all data and programs, and because the data that it holds are lost when power
+is lost, the computer system must provide secondary storage to back up main
+memory. Most modern computer systems use disks as the principal on-line
+storage medium for both programs and data. Most programs—including
+compilers, assemblers, word processors, editors, and formatters—are stored
+on a disk until loaded into memory. They then use the disk as both the source
+and destination of their processing. Hence, the proper management of disk
+storage is of central importance to a computer system. The operating system is
+responsible for the following activities in connection with disk management:
+• Free-space management
+• Storage allocation
+• Disk scheduling
+Because secondary storage is used frequently, it must be used efficiently. The
+entire speed of operation of a computer may hinge on the speeds of the disk
+subsystem and the algorithms that manipulate that subsystem.
+There are, however, many uses for storage that is slower and lower in
+cost (and sometimes of higher capacity) than secondary storage. Backups of
+disk data, storage of seldom-used data, and long-term archival storage are
+some examples. Magnetic tape drives and their tapes and CD and DVD drives
+and platters are typical tertiary storage devices. The media (tapes and optical
+platters) vary between WORM (write-once, read-many-times) and RW (read–
+write) formats.
+Tertiary storage is not crucial to system performance, but it still must
+be managed. Some operating systems take on this task, while others leave
+tertiary-storage management to application programs. Some of the functions
+that operating systems can provide include mounting and unmounting media
+in devices, allocating and freeing the devices for exclusive use by processes,
+and migrating data from secondary to tertiary storage.
+Techniques for secondary and tertiary storage management are discussed
+in Chapter 10.
+1.8.3 Caching
+Caching is an important principle of computer systems. Here’s how it works.
+Information is normally kept in some storage system (such as main memory).
+As it is used, it is copied into a faster storage system—the cache—on a
+28 Chapter 1 Introduction
+temporary basis. When we need a particular piece of information, we first

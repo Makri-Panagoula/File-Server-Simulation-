@@ -1,0 +1,100 @@
+integral part of the operating systems.) As a result, Microsoft was found guilty
+of using its operating-system monopoly to limit competition.
+Today, however, if we look at operating systems for mobile devices, we
+see that once again the number of features constituting the operating system
+1.2 Computer-System Organization 7
+is increasing. Mobile operating systems often include not only a core kernel
+but also middleware—a set of software frameworks that provide additional
+services to application developers. For example, each of the two most prominent mobile operating systems—Apple’s iOS and Google’s Android—features
+a core kernel along with middleware that supports databases, multimedia, and
+graphics (to name a only few).
+1.2 Computer-System Organization
+Before we can explore the details of how computer systems operate, we need
+general knowledge of the structure of a computer system. In this section,
+we look at several parts of this structure. The section is mostly concerned
+with computer-system organization, so you can skim or skip it if you already
+understand the concepts.
+1.2.1 Computer-System Operation
+A modern general-purpose computer system consists of one or more CPUs
+and a number of device controllers connected through a common bus that
+provides access to shared memory (Figure 1.2). Each device controller is in
+charge of a specific type of device (for example, disk drives, audio devices,
+or video displays). The CPU and the device controllers can execute in parallel,
+competing for memory cycles. To ensure orderly access to the shared memory,
+a memory controller synchronizes access to the memory.
+For a computer to start running—for instance, when it is powered up or
+rebooted—it needs to have an initial program to run. This initial program,
+or bootstrap program, tends to be simple. Typically, it is stored within
+the computer hardware in read-only memory (ROM) or electrically erasable
+programmable read-only memory (EEPROM), known by the general term
+firmware. It initializes all aspects of the system, from CPU registers to device
+controllers to memory contents. The bootstrap program must know how to load
+the operating system and how to start executing that system. To accomplish
+this goal, the bootstrap program must locate the operating-system kernel and
+load it into memory.
+Once the kernel is loaded and executing, it can start providing services to
+the system and its users. Some services are provided outside of the kernel, by
+system programs that are loaded into memory at boot time to become system
+processes, or system daemons that run the entire time the kernel is running.
+On UNIX, the first system process is “init,” and it starts many other daemons.
+Once this phase is complete, the system is fully booted, and the system waits
+for some event to occur.
+The occurrence of an event is usually signaled by an interrupt from either
+the hardware or the software. Hardware may trigger an interrupt at any time
+by sending a signal to the CPU, usually by way of the system bus. Software
+may trigger an interrupt by executing a special operation called a system call
+(also called a monitor call).
+When the CPU is interrupted, it stops what it is doing and immediately
+transfers execution to a fixed location. The fixed location usually contains
+the starting address where the service routine for the interrupt is located.
+The interrupt service routine executes; on completion, the CPU resumes the
+interrupted computation. A timeline of this operation is shown in Figure 1.3.
+Interrupts are an important part of a computer architecture. Each computer
+design has its own interrupt mechanism, but several functions are common.
+The interrupt must transfer control to the appropriate interrupt service routine.
+The straightforward method for handling this transfer would be to invoke
+a generic routine to examine the interrupt information. The routine, in turn,
+would call the interrupt-specific handler. However, interrupts must be handled
+quickly. Since only a predefined number of interrupts is possible, a table of
+pointers to interrupt routines can be used instead to provide the necessary
+speed. The interrupt routine is called indirectly through the table, with no
+intermediate routine needed. Generally, the table of pointers is stored in low
+memory (the first hundred or so locations). These locations hold the addresses
+of the interrupt service routines for the various devices. This array, orinterrupt
+vector, of addresses is then indexed by a unique device number, given with
+the interrupt request, to provide the address of the interrupt service routine for
+the interrupting device. Operating systems as different as Windows and UNIX
+dispatch interrupts in this manner.
+The interrupt architecture must also save the address of the interrupted
+instruction. Many old designs simply stored the interrupt address in a
+fixed location or in a location indexed by the device number. More recent
+architectures store the return address on the system stack. If the interrupt
+routine needs to modify the processor state—for instance, by modifying
+register values—it must explicitly save the current state and then restore that
+state before returning. After the interrupt is serviced, the saved return address
+is loaded into the program counter, and the interrupted computation resumes
+as though the interrupt had not occurred.
+1.2.2 Storage Structure
+The CPU can load instructions only from memory, so any programs to run must
+be stored there. General-purpose computers run most of their programs from
+rewritable memory, called main memory (also called random-access memory,
+or RAM). Main memory commonly is implemented in a semiconductor
+technology called dynamic random-access memory (DRAM).
+Computers use other forms of memory as well. We have already mentioned
+read-only memory, ROM) and electrically erasable programmable read-only
+memory, EEPROM). Because ROM cannot be changed, only static programs, such
+as the bootstrap program described earlier, are stored there. The immutability
+of ROM is of use in game cartridges. EEPROM can be changed but cannot
+be changed frequently and so contains mostly static programs. For example,
+smartphones have EEPROM to store their factory-installed programs.
+10 Chapter 1 Introduction
+All forms of memory provide an array of bytes. Each byte has its
+own address. Interaction is achieved through a sequence of load or store
+instructions to specific memory addresses. The load instruction moves a byte
+or word from main memory to an internal register within the CPU, whereas the
+store instruction moves the content of a register to main memory. Aside from
+explicit loads and stores, the CPU automatically loads instructions from main
+memory for execution.
+A typical instruction–execution cycle, as executed on a system with a von
+Neumann architecture, first fetches an instruction from memory and stores
+that instruction in the instruction register. 

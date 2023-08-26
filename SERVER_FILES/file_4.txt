@@ -1,0 +1,100 @@
+editions include Hamid Arabnia, Rida Bazzi, Randy Bentson, David Black,
+Joseph Boykin, Jeff Brumfield, Gael Buckley, Roy Campbell, P. C. Capon, John
+Carpenter, Gil Carrick, Thomas Casavant, Bart Childs, Ajoy Kumar Datta,
+Joe Deck, Sudarshan K. Dhall, Thomas Doeppner, Caleb Drake, M. Racsit
+Eskicioglu, Hans Flack, Robert Fowler, G. Scott Graham, Richard Guy, Max ˘
+Hailperin, Rebecca Hartman, Wayne Hathaway, Christopher Haynes, Don
+Heller, Bruce Hillyer, Mark Holliday, Dean Hougen, Michael Huang, Ahmed
+Kamel, Morty Kewstel, Richard Kieburtz, Carol Kroll, Morty Kwestel, Thomas
+LeBlanc, John Leggett, Jerrold Leichter, Ted Leung, Gary Lippman, Carolyn
+Miller, Michael Molloy, Euripides Montagne, Yoichi Muraoka, Jim M. Ng,
+Banu Ozden, Ed Posnak, Boris Putanec, Charles Qualline, John Quarterman, ¨
+Mike Reiter, Gustavo Rodriguez-Rivera, Carolyn J. C. Schauble, Thomas P.
+Skinner, Yannis Smaragdakis, Jesse St. Laurent, John Stankovic, Adam Stauffer,
+Steven Stepanek, John Sterling, Hal Stern, Louis Stevens, Pete Thomas, David
+Umbaugh, Steve Vinoski, Tommy Wagner, Larry L. Wear, John Werth, James
+M. Westall, J. S. Weston, and Yang Xiang
+Robert Love updated both Chapter 18 and the Linux coverage throughout
+the text, as well as answering many of our Android-related questions. Chapter
+19 was written by Dave Probert and was derived from Chapter 22 of the Eighth
+Edition of Operating System Concepts. Jonathan Katz contributed to Chapter
+15. Richard West provided input into Chapter 16. Salahuddin Khan updated
+Section 15.9 to provide new coverage of Windows 7 security.
+Parts of Chapter 17 were derived from a paper by Levy and Silberschatz
+[1990]. Chapter 18 was derived from an unpublished manuscript by Stephen
+Tweedie. Cliff Martin helped with updating the UNIX appendix to cover
+FreeBSD. Some of the exercises and accompanying solutions were supplied by
+Arvind Krishnamurthy. Andrew DeNicola prepared the student study guide
+that is available on our website. Some of the the slides were prepeared by
+Marilyn Turnamian.
+Mike Shapiro, Bryan Cantrill, and Jim Mauro answered several Solarisrelated questions, and Bryan Cantrill from Sun Microsystems helped with the
+ZFS coverage. Josh Dees and Rob Reynolds contributed coverage of Microsoft’s
+NET. The project for POSIX message queues was contributed by John Trono of
+Saint Michael’s College in Colchester, Vermont.
+Judi Paige helped with generating figures and presentation of slides.
+Thomas Gagne prepared new artwork for this edition. Owen Galvin helped
+copy-edit Chapter 16. Mark Wogahn has made sure that the software to produce
+this book (LATEX and fonts) works properly. Ranjan Kumar Meher rewrote some
+of the LATEX software used in the production of this new text.
+1.1.2 System View
+From the computer’s point of view, the operating system is the program
+most intimately involved with the hardware. In this context, we can view
+an operating system as a resource allocator. A computer system has many
+resources that may be required to solve a problem: CPU time, memory space,
+file-storage space, I/O devices, and so on. The operating system acts as the
+manager of these resources. Facing numerous and possibly conflicting requests
+for resources, the operating system must decide how to allocate them to specific
+programs and users so that it can operate the computer system efficiently and
+fairly. As we have seen, resource allocation is especially important where many
+users access the same mainframe or minicomputer.
+A slightly different view of an operating system emphasizes the need to
+control the various I/O devices and user programs. An operating system is a
+control program. A control program manages the execution of user programs
+to prevent errors and improper use of the computer. It is especially concerned
+with the operation and control of I/O devices.
+6 Chapter 1 Introduction
+1.1.3 Defining Operating Systems
+By now, you can probably see that the term operating system covers many roles
+and functions. That is the case, at least in part, because of the myriad designs
+and uses of computers. Computers are present within toasters, cars, ships,
+spacecraft, homes, and businesses. They are the basis for game machines, music
+players, cable TV tuners, and industrial control systems. Although computers
+have a relatively short history, they have evolved rapidly. Computing started
+as an experiment to determine what could be done and quickly moved to
+fixed-purpose systems for military uses, such as code breaking and trajectory
+plotting, and governmental uses, such as census calculation. Those early
+computers evolved into general-purpose, multifunction mainframes, and
+that’s when operating systems were born. In the 1960s, Moore’s Law predicted
+that the number of transistors on an integrated circuit would double every
+eighteen months, and that prediction has held true. Computers gained in
+functionality and shrunk in size, leading to a vast number of uses and a vast
+number and variety of operating systems. (See Chapter 20 for more details on
+the history of operating systems.)
+How, then, can we define what an operating system is? In general, we have
+no completely adequate definition of an operating system. Operating systems
+exist because they offer a reasonable way to solve the problem of creating a
+usable computing system. The fundamental goal of computer systems is to
+execute user programs and to make solving user problems easier. Computer
+hardware is constructed toward this goal. Since bare hardware alone is not
+particularly easy to use, application programs are developed. These programs
+require certain common operations, such as those controlling the I/O devices.
+The common functions of controlling and allocating resources are then brought
+together into one piece of software: the operating system.
+In addition, we have no universally accepted definition of what is part of the
+operating system. A simple viewpoint is that it includes everything a vendor
+ships when you order “the operating system.” The features included, however,
+vary greatly across systems. Some systems take up less than a megabyte of
+space and lack even a full-screen editor, whereas others require gigabytes of
+space and are based entirely on graphical windowing systems. A more common
+definition, and the one that we usually follow, is that the operating system
+is the one program running at all times on the computer—usually called
+the kernel. (Along with the kernel, there are two other types of programs:
+system programs, which are associated with the operating system but are not
+necessarily part of the kernel, and application programs, which include all
+programs not associated with the operation of the system.)
+The matter of what constitutes an operating system became increasingly
+important as personal computers became more widespread and operating
+systems grew increasingly sophisticated. In 1998, the United States Department
+of Justice filed suit against Microsoft, in essence claiming that Microsoft
+included too much functionality in its operating systems and thus prevented
+application vendors from competing. (For example, a Web browser was an

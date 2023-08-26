@@ -1,0 +1,100 @@
+check whether it is in the cache. If it is, we use the information directly from
+the cache. If it is not, we use the information from the source, putting a copy
+in the cache under the assumption that we will need it again soon.
+In addition, internal programmable registers, such as index registers,
+provide a high-speed cache for main memory. The programmer (or compiler)
+implements the register-allocation and register-replacement algorithms to
+decide which information to keep in registers and which to keep in main
+memory.
+Other caches are implemented totally in hardware. For instance, most
+systems have an instruction cache to hold the instructions expected to be
+executed next. Without this cache, the CPU would have to wait several cycles
+while an instruction was fetched from main memory. For similar reasons, most
+systems have one or more high-speed data caches in the memory hierarchy.
+We are not concerned with these hardware-only caches in this text, since they
+are outside the control of the operating system.
+Because caches have limited size, cache management is an important
+design problem. Careful selection of the cache size and of a replacement policy
+can result in greatly increased performance. Figure 1.11 compares storage
+performance in large workstations and small servers. Various replacement
+algorithms for software-controlled caches are discussed in Chapter 9.
+Main memory can be viewed as a fast cache for secondary storage, since
+data in secondary storage must be copied into main memory for use and
+data must be in main memory before being moved to secondary storage for
+safekeeping. The file-system data, which resides permanently on secondary
+storage, may appear on several levels in the storage hierarchy. At the highest
+level, the operating system may maintain a cache of file-system data in main
+memory. In addition, solid-state disks may be used for high-speed storage that
+is accessed through the file-system interface. The bulk of secondary storage
+is on magnetic disks. The magnetic-disk storage, in turn, is often backed up
+onto magnetic tapes or removable disks to protect against data loss in case
+of a hard-disk failure. Some systems automatically archive old file data from
+secondary storage to tertiary storage, such as tape jukeboxes, to lower the
+storage cost (see Chapter 10).
+The movement of information between levels of a storage hierarchy may
+be either explicit or implicit, depending on the hardware design and the
+controlling operating-system software. For instance, data transfer from cache
+to CPU and registers is usually a hardware function, with no operating-system
+intervention. In contrast, transfer of data from disk to memory is usually
+controlled by the operating system.
+In a hierarchical storage structure, the same data may appear in different
+levels of the storage system. For example, suppose that an integer A that is to
+be incremented by 1 is located in file B, and file B resides on magnetic disk.
+The increment operation proceeds by first issuing an I/O operation to copy the
+disk block on which A resides to main memory. This operation is followed by
+copying A to the cache and to an internal register. Thus, the copy of A appears
+in several places: on the magnetic disk, in main memory, in the cache, and in an
+internal register (see Figure 1.12). Once the increment takes place in the internal
+register, the value of A differs in the various storage systems. The value of A
+becomes the same only after the new value of A is written from the internal
+register back to the magnetic disk.
+In a computing environment where only one process executes at a time,
+this arrangement poses no difficulties, since an access to integer A will always
+be to the copy at the highest level of the hierarchy. However, in a multitasking
+environment, where the CPU is switched back and forth among various
+processes, extreme care must be taken to ensure that, if several processes wish
+to access A, then each of these processes will obtain the most recently updated
+value of A.
+The situation becomes more complicated in a multiprocessor environment
+where, in addition to maintaining internal registers, each of the CPUs also
+contains a local cache (Figure 1.6). In such an environment, a copy of A may
+exist simultaneously in several caches. Since the various CPUs can all execute
+in parallel, we must make sure that an update to the value of A in one cache
+is immediately reflected in all other caches where A resides. This situation is
+called cache coherency, and it is usually a hardware issue (handled below the
+operating-system level).
+In a distributed environment, the situation becomes even more complex.
+In this environment, several copies (or replicas) of the same file can be kept on
+different computers. Since the various replicas may be accessed and updated
+concurrently, some distributed systems ensure that, when a replica is updated
+in one place, all other replicas are brought up to date as soon as possible. There
+are various ways to achieve this guarantee, as we discuss in Chapter 17.
+1.8.4 I/O Systems
+One of the purposes of an operating system is to hide the peculiarities of specific
+hardware devices from the user. For example, in UNIX, the peculiarities of I/O
+30 Chapter 1 Introduction
+devices are hidden from the bulk of the operating system itself by the I/O
+subsystem. The I/O subsystem consists of several components:
+• A memory-management component that includes buffering, caching, and
+spooling
+• A general device-driver interface
+• Drivers for specific hardware devices
+Only the device driver knows the peculiarities of the specific device to which
+it is assigned.
+We discussed in Section 1.2.3 how interrupt handlers and device drivers are
+used in the construction of efficient I/O subsystems. In Chapter 13, we discuss
+how the I/O subsystem interfaces to the other system components, manages
+devices, transfers data, and detects I/O completion.
+1.9 Protection and Security
+If a computer system has multiple users and allows the concurrent execution
+of multiple processes, then access to data must be regulated. For that purpose,
+mechanisms ensure that files, memory segments, CPU, and other resources can
+be operated on by only those processes that have gained proper authorization from the operating system. For example, memory-addressing hardware
+ensures that a process can execute only within its own address space. The
+timer ensures that no process can gain control of the CPU without eventually
+relinquishing control. Device-control registers are not accessible to users, so
+the integrity of the various peripheral devices is protected.
+Protection, then, is any mechanism for controlling the access of processes
+or users to the resources defined by a computer system. This mechanism must
+provide means to specify the controls to be imposed and to enforce the controls.
+Protection can improve reliability by detecting latent errors at the interfaces

@@ -1,0 +1,53 @@
+---REQUESTS---
+28 - 75 from 4
+that is available on our website. Some of the the slides were prepeared by
+Saint Michael’s College in Colchester, Vermont.
+Saint Michael’s College in Colchester, Vermont.
+Saint Michael’s College in Colchester, Vermont.
+Judi Paige helped with generating figures and presentation of slides.
+Judi Paige helped with generating figures and presentation of slides.
+Judi Paige helped with generating figures and presentation of slides.
+Thomas Gagne prepared new artwork for this edition. Owen Galvin helped
+copy-edit Chapter 16. Mark Wogahn has made sure that the software to produce
+this book (LATEX and fonts) works properly. Ranjan Kumar Meher rewrote some
+of the LATEX software used in the production of this new text.
+1.1.2 System View
+From the computer’s point of view, the operating system is the program
+most intimately involved with the hardware. In this context, we can view
+an operating system as a resource allocator. A computer system has many
+resources that may be required to solve a problem: CPU time, memory space,
+file-storage space, I/O devices, and so on. The operating system acts as the
+manager of these resources. Facing numerous and possibly conflicting requests
+for resources, the operating system must decide how to allocate them to specific
+programs and users so that it can operate the computer system efficiently and
+fairly. As we have seen, resource allocation is especially important where many
+users access the same mainframe or minicomputer.
+A slightly different view of an operating system emphasizes the need to
+control the various I/O devices and user programs. An operating system is a
+control program. A control program manages the execution of user programs
+to prevent errors and improper use of the computer. It is especially concerned
+with the operation and control of I/O devices.
+6 Chapter 1 Introduction
+1.1.3 Defining Operating Systems
+By now, you can probably see that the term operating system covers many roles
+and functions. That is the case, at least in part, because of the myriad designs
+and uses of computers. Computers are present within toasters, cars, ships,
+spacecraft, homes, and businesses. They are the basis for game machines, music
+players, cable TV tuners, and industrial control systems. Although computers
+have a relatively short history, they have evolved rapidly. Computing started
+as an experiment to determine what could be done and quickly moved to
+fixed-purpose systems for military uses, such as code breaking and trajectory
+plotting, and governmental uses, such as census calculation. Those early
+computers evolved into general-purpose, multifunction mainframes, and
+that’s when operating systems were born. In the 1960s, Moore’s Law predicted
+that the number of transistors on an integrated circuit would double every
+eighteen months, and that prediction has held true. Computers gained in
+no completely adequate definition of an operating system. Operating systems
+no completely adequate definition of an operating system. Operating systems
+no completely adequate definition of an operating system. Operating systems
+
+---METRICS---
+Total lines returned : 47.
+Total files retrieved : 1.
+Total delay between submitting and receiving requests : 0.
+Average time between consequtive requests: 0.

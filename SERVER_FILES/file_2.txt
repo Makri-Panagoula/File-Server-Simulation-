@@ -1,0 +1,100 @@
+systems. Included is an overview of the hardware and software techniques
+that make virtualization possible. Chapter 17 condenses and updates the
+three chapters on distributed computing from the previous edition. This
+change is meant to make it easier for instructors to cover the material in
+the limited time available during a semester and for students to gain an
+understanding of the core ideas of distributed computing more quickly.
+• Case studies. Chapters 18 and 19 in the text, along with Appendices A and
+B (which are available on (http://www.os-book.com), present detailed
+case studies of real operating systems, including Linux, Windows 7,
+FreeBSD, and Mach. Coverage of both Linux and Windows 7 are presented
+throughout this text; however, the case studies provide much more detail.
+It is especially interesting to compare and contrast the design of these two
+very different systems. Chapter 20 briefly describes a few other influential
+operating systems.
+The Ninth Edition
+As we wrote this Ninth Edition of Operating System Concepts, we were guided
+by the recent growth in three fundamental areas that affect operating systems:
+1. Multicore systems
+2. Mobile computing
+3. Virtualization
+To emphasize these topics, we have integrated relevant coverage throughout
+this new edition—and, in the case of virtualization, have written an entirely
+new chapter. Additionally, we have rewritten material in almost every chapter
+by bringing older material up to date and removing material that is no longer
+interesting or relevant.
+x Preface
+We have also made substantial organizational changes. For example, we
+have eliminated the chapter on real-time systems and instead have integrated
+appropriate coverage of these systems throughout the text. We have reordered
+the chapters on storage management and have moved up the presentation
+of process synchronization so that it appears before process scheduling. Most
+of these organizational changes are based on our experiences while teaching
+courses on operating systems.
+Below, we provide a brief outline of the major changes to the various
+chapters:
+• Chapter 1, Introduction, includes updated coverage of multiprocessor
+and multicore systems, as well as a new section on kernel data structures.
+Additionally, the coverage of computing environments now includes
+mobile systems and cloud computing. We also have incorporated an
+overview of real-time systems.
+• Chapter 2, Operating-System Structures, provides new coverage of user
+interfaces for mobile devices, including discussions of iOS and Android,
+and expanded coverage of Mac OS X as a type of hybrid system.
+• Chapter 3, Processes, now includes coverage of multitasking in mobile
+operating systems, support for the multiprocess model in Google’s Chrome
+web browser, and zombie and orphan processes in UNIX.
+• Chapter 4, Threads, supplies expanded coverage of parallelism and
+Amdahl’s law. It also provides a new section on implicit threading,
+including OpenMP and Apple’s Grand Central Dispatch.
+• Chapter 5, Process Synchronization (previously Chapter 6), adds a new
+section on mutex locks as well as coverage of synchronization using
+OpenMP, as well as functional languages.
+• Chapter 6, CPU Scheduling (previously Chapter 5), contains new coverage
+of the Linux CFS scheduler and Windows user-mode scheduling. Coverage
+of real-time scheduling algorithms has also been integrated into this
+chapter.
+• Chapter 7, Deadlocks, has no major changes.
+• Chapter 8, Main Memory, includes new coverage of swapping on mobile
+systems and Intel 32- and 64-bit architectures. A new section discusses
+ARM architecture.
+• Chapter 9, Virtual Memory, updates kernel memory management to
+include the Linux SLUB and SLOB memory allocators.
+• Chapter 10, Mass-Storage Structure (previously Chapter 12), adds coverage of solid-state disks.
+• Chapter 11, File-System Interface (previously Chapter 10), is updated
+with information about current technologies.
+• Chapter 12, File-System Implementation (previously Chapter 11), is
+updated with coverage of current technologies.
+• Chapter 13, I/O, updates technologies and performance numbers, expands
+coverage of synchronous/asynchronous and blocking/nonblocking I/O,
+and adds a section on vectored I/O.
+Preface xi
+• Chapter 14, Protection, has no major changes.
+• Chapter 15, Security, has a revised cryptography section with modern
+notation and an improved explanation of various encryption methods and
+their uses. The chapter also includes new coverage of Windows 7 security.
+• Chapter 16, Virtual Machines, is a new chapter that provides an overview
+of virtualization and how it relates to contemporary operating systems.
+• Chapter 17, Distributed Systems, is a new chapter that combines and
+updates a selection of materials from previous Chapters 16, 17, and 18.
+• Chapter 18, The Linux System (previously Chapter 21), has been updated
+to cover the Linux 3.2 kernel.
+• Chapter 19, Windows 7, is a new chapter presenting a case study of
+Windows 7.
+• Chapter 20, Influential Operating Systems (previously Chapter 23), has
+no major changes.
+Programming Environments
+This book uses examples of many real-world operating systems to illustrate
+fundamental operating-system concepts. Particular attention is paid to Linux
+and Microsoft Windows, but we also refer to various versions of UNIX
+(including Solaris, BSD, and Mac OS X).
+The text also provides several example programs written in C and
+Java. These programs are intended to run in the following programming
+environments:
+• POSIX. POSIX (which stands for Portable Operating System Interface) represents a set of standards implemented primarily for UNIX-based operating
+systems. Although Windows systems can also run certain POSIX programs,
+our coverage of POSIX focuses on UNIX and Linux systems. POSIX-compliant
+systems must implement the POSIX core standard (POSIX.1); Linux, Solaris,
+and Mac OS X are examples of POSIX-compliant systems. POSIX also
+defines several extensions to the standards, including real-time extensions
+(POSIX1.b) and an extension for a threads library (POSIX1.c, better known

@@ -1,0 +1,100 @@
+registers, on the stack, or in memory (with pointers to the memory locations
+passed in registers). The kernel verifies that the parameters are correct and
+legal, executes the request, and returns control to the instruction following the
+system call. We describe system calls more fully in Section 2.3.
+The lack of a hardware-supported dual mode can cause serious shortcomings in an operating system. For instance, MS-DOS was written for the Intel
+8088 architecture, which has no mode bit and therefore no dual mode. A user
+program running awry can wipe out the operating system by writing over it
+with data; and multiple programs are able to write to a device at the same
+time, with potentially disastrous results. Modern versions of the Intel CPU
+do provide dual-mode operation. Accordingly, most contemporary operating
+systems—such as Microsoft Windows 7, as well as Unix and Linux—take
+advantage of this dual-mode feature and provide greater protection for the
+operating system.
+Once hardware protection is in place, it detects errors that violate modes.
+These errors are normally handled by the operating system. If a user program
+fails in some way—such as by making an attempt either to execute an illegal
+instruction or to access memory that is not in the user’s address space—then
+the hardware traps to the operating system. The trap transfers control through
+the interrupt vector to the operating system, just as an interrupt does. When
+a program error occurs, the operating system must terminate the program
+abnormally. This situation is handled by the same code as a user-requested
+abnormal termination. An appropriate error message is given, and the memory
+of the program may be dumped. The memory dump is usually written to a
+file so that the user or programmer can examine it and perhaps correct it and
+restart the program.
+24 Chapter 1 Introduction
+1.5.2 Timer
+We must ensure that the operating system maintains control over the CPU.
+We cannot allow a user program to get stuck in an infinite loop or to fail
+to call system services and never return control to the operating system. To
+accomplish this goal, we can use a timer. A timer can be set to interrupt
+the computer after a specified period. The period may be fixed (for example,
+1/60 second) or variable (for example, from 1 millisecond to 1 second). A
+variable timer is generally implemented by a fixed-rate clock and a counter.
+The operating system sets the counter. Every time the clock ticks, the counter
+is decremented. When the counter reaches 0, an interrupt occurs. For instance,
+a 10-bit counter with a 1-millisecond clock allows interrupts at intervals from
+1 millisecond to 1,024 milliseconds, in steps of 1 millisecond.
+Before turning over control to the user, the operating system ensures
+that the timer is set to interrupt. If the timer interrupts, control transfers
+automatically to the operating system, which may treat the interrupt as a fatal
+error or may give the program more time. Clearly, instructions that modify the
+content of the timer are privileged.
+We can use the timer to prevent a user program from running too long.
+A simple technique is to initialize a counter with the amount of time that a
+program is allowed to run. A program with a 7-minute time limit, for example,
+would have its counter initialized to 420. Every second, the timer interrupts,
+and the counter is decremented by 1. As long as the counter is positive, control
+is returned to the user program. When the counter becomes negative, the
+operating system terminates the program for exceeding the assigned time
+limit.
+1.6 Process Management
+A program does nothing unless its instructions are executed by a CPU. A
+program in execution, as mentioned, is a process. A time-shared user program
+such as a compiler is a process. A word-processing program being run by an
+individual user on a PC is a process. A system task, such as sending output
+to a printer, can also be a process (or at least part of one). For now, you can
+consider a process to be a job or a time-shared program, but later you will learn
+that the concept is more general. As we shall see in Chapter 3, it is possible
+to provide system calls that allow processes to create subprocesses to execute
+concurrently.
+A process needs certain resources—including CPU time, memory, files,
+and I/O devices—to accomplish its task. These resources are either given to
+the process when it is created or allocated to it while it is running. In addition
+to the various physical and logical resources that a process obtains when it is
+created, various initialization data (input) may be passed along. For example,
+consider a process whose function is to display the status of a file on the screen
+of a terminal. The process will be given the name of the file as an input and will
+execute the appropriate instructions and system calls to obtain and display
+the desired information on the terminal. When the process terminates, the
+operating system will reclaim any reusable resources.
+We emphasize that a program by itself is not a process. A program is a
+passive entity, like the contents of a file stored on disk, whereas a process
+1.7 Memory Management 25
+is an active entity. A single-threaded process has one program counter
+specifying the next instruction to execute. (Threads are covered in Chapter
+4.) The execution of such a process must be sequential. The CPU executes one
+instruction of the process after another, until the process completes. Further,
+at any time, one instruction at most is executed on behalf of the process. Thus,
+although two processes may be associated with the same program, they are
+nevertheless considered two separate execution sequences. A multithreaded
+process has multiple program counters, each pointing to the next instruction
+to execute for a given thread.
+A process is the unit of work in a system. A system consists of a collection
+of processes, some of which are operating-system processes (those that execute
+system code) and the rest of which are user processes (those that execute
+user code). All these processes can potentially execute concurrently—by
+multiplexing on a single CPU, for example.
+The operating system is responsible for the following activities in connection with process management:
+• Scheduling processes and threads on the CPUs
+• Creating and deleting both user and system processes
+• Suspending and resuming processes
+• Providing mechanisms for process synchronization
+• Providing mechanisms for process communication
+We discuss process-management techniques in Chapters 3 through 5.
+1.7 Memory Management
+As we discussed in Section 1.2.2, the main memory is central to the operation
+of a modern computer system. Main memory is a large array of bytes, ranging
+in size from hundreds of thousands to billions. Each byte has its own address.
+Main memory is a repository of quickly accessible data shared by the CPU and

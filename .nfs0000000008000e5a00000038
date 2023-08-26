@@ -1,0 +1,96 @@
+---REQUESTS---
+56 - 56 from 6
+after wait
+a user program.
+
+40 - 81 from 9
+after wait
+In a hierarchical storage structure, the same data may appear in different
+after wait
+In a hierarchical storage structure, the same data may appear in different
+after wait
+levels of the storage system. For example, suppose that an integer A that is to
+after wait
+be incremented by 1 is located in file B, and file B resides on magnetic disk.
+after wait
+The increment operation proceeds by first issuing an I/O operation to copy the
+after wait
+disk block on which A resides to main memory. This operation is followed by
+after wait
+copying A to the cache and to an internal register. Thus, the copy of A appears
+after wait
+in several places: on the magnetic disk, in main memory, in the cache, and in an
+after wait
+internal register (see Figure 1.12). Once the increment takes place in the internal
+after wait
+register, the value of A differs in the various storage systems. The value of A
+after wait
+becomes the same only after the new value of A is written from the internal
+after wait
+register back to the magnetic disk.
+after wait
+In a computing environment where only one process executes at a time,
+after wait
+this arrangement poses no difficulties, since an access to integer A will always
+after wait
+be to the copy at the highest level of the hierarchy. However, in a multitasking
+after wait
+environment, where the CPU is switched back and forth among various
+after wait
+processes, extreme care must be taken to ensure that, if several processes wish
+after wait
+to access A, then each of these processes will obtain the most recently updated
+after wait
+value of A.
+after wait
+The situation becomes more complicated in a multiprocessor environment
+after wait
+where, in addition to maintaining internal registers, each of the CPUs also
+after wait
+contains a local cache (Figure 1.6). In such an environment, a copy of A may
+after wait
+exist simultaneously in several caches. Since the various CPUs can all execute
+after wait
+in parallel, we must make sure that an update to the value of A in one cache
+after wait
+is immediately reflected in all other caches where A resides. This situation is
+after wait
+called cache coherency, and it is usually a hardware issue (handled below the
+after wait
+operating-system level).
+after wait
+In a distributed environment, the situation becomes even more complex.
+after wait
+In this environment, several copies (or replicas) of the same file can be kept on
+after wait
+different computers. Since the various replicas may be accessed and updated
+after wait
+concurrently, some distributed systems ensure that, when a replica is updated
+after wait
+in one place, all other replicas are brought up to date as soon as possible. There
+after wait
+are various ways to achieve this guarantee, as we discuss in Chapter 17.
+after wait
+1.8.4 I/O Systems
+after wait
+One of the purposes of an operating system is to hide the peculiarities of specific
+after wait
+hardware devices from the user. For example, in UNIX, the peculiarities of I/O
+after wait
+30 Chapter 1 Introduction
+after wait
+devices are hidden from the bulk of the operating system itself by the I/O
+after wait
+subsystem. The I/O subsystem consists of several components:
+after wait
+• A memory-management component that includes buffering, caching, and
+after wait
+spooling
+after wait
+• A general device-driver interface
+
+---METRICS---
+Total lines returned : 41.
+Total files retrieved : 2.
+Total delay between submitting and receiving requests : 0.
+Average time between consequtive requests: 0.

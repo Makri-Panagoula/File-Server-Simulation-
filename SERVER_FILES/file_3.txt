@@ -1,0 +1,100 @@
+as Pthreads). We provide several programming examples written in C
+illustrating the POSIX base API, as well as Pthreads and the extensions for
+real-time programming. These example programs were tested on Linux 2.6
+and 3.2 systems, Mac OS X 10.7, and Solaris 10 using the gcc 4.0 compiler.
+• Java. Java is a widely used programming language with a rich API and
+built-in language support for thread creation and management. Java
+programs run on any operating system supporting a Java virtual machine
+(or JVM). We illustrate various operating-system and networking concepts
+with Java programs tested using the Java 1.6 JVM.
+• Windows systems. The primary programming environment for Windows
+systems is the Windows API, which provides a comprehensive set of functions for managing processes, threads, memory, and peripheral devices.
+We supply several C programs illustrating the use of this API. Programs
+were tested on systems running Windows XP and Windows 7.
+xii Preface
+We have chosen these three programming environments because we
+believe that they best represent the two most popular operating-system models
+—Windows and UNIX/Linux—along with the widely used Java environment.
+Most programming examples are written in C, and we expect readers to be
+comfortable with this language. Readers familiar with both the C and Java
+languages should easily understand most programs provided in this text.
+In some instances—such as thread creation—we illustrate a specific
+concept using all three programming environments, allowing the reader
+to contrast the three different libraries as they address the same task. In
+other situations, we may use just one of the APIs to demonstrate a concept.
+For example, we illustrate shared memory using just the POSIX API; socket
+programming in TCP/IP is highlighted using the Java API.
+Linux Virtual Machine
+To help students gain a better understanding of the Linux system, we
+provide a Linux virtual machine, including the Linux source code,
+that is available for download from the the website supporting this
+text (http://www.os-book.com). This virtual machine also includes a
+gcc development environment with compilers and editors. Most of the
+programming assignments in the book can be completed on this virtual
+machine, with the exception of assignments that require Java or the Windows
+API.
+We also provide three programming assignments that modify the Linux
+kernel through kernel modules:
+1. Adding a basic kernel module to the Linux kernel.
+2. Adding a kernel module that uses various kernel data structures.
+3. Adding a kernel module that iterates over tasks in a running Linux
+system.
+Over time it is our intention to add additional kernel module assignments on
+the supporting website.
+Supporting Website
+When you visit the website supporting this text at http://www.os-book.com,
+you can download the following resources:
+• Linux virtual machine
+• C and Java source code
+• Sample syllabi
+• Set of Powerpoint slides
+• Set of figures and illustrations
+• FreeBSD and Mach case studies
+Preface xiii
+• Solutions to practice exercises
+• Study guide for students
+• Errata
+Notes to Instructors
+On the website for this text, we provide several sample syllabi that suggest
+various approaches for using the text in both introductory and advanced
+courses. As a general rule, we encourage instructors to progress sequentially
+through the chapters, as this strategy provides the most thorough study of
+operating systems. However, by using the sample syllabi, an instructor can
+select a different ordering of chapters (or subsections of chapters).
+In this edition, we have added over sixty new written exercises and over
+twenty new programming problems and projects. Most of the new programming assignments involve processes, threads, process synchronization, and
+memory management. Some involve adding kernel modules to the Linux
+system which requires using either the Linux virtual machine that accompanies
+this text or another suitable Linux distribution.
+Solutions to written exercises and programming assignments are available
+to instructors who have adopted this text for their operating-system class. To
+obtain these restricted supplements, contact your local John Wiley & Sons
+sales representative. You can find your Wiley representative by going to
+http://www.wiley.com/college and clicking “Who’s my rep?”
+Notes to Students
+We encourage you to take advantage of the practice exercises that appear at
+the end of each chapter. Solutions to the practice exercises are available for
+download from the supporting website http://www.os-book.com. We also
+encourage you to read through the study guide, which was prepared by one of
+our students. Finally, for students who are unfamiliar with UNIX and Linux
+systems, we recommend that you download and install the Linux virtual
+machine that we include on the supporting website. Not only will this provide
+you with a new computing experience, but the open-source nature of Linux
+will allow you to easily examine the inner details of this popular operating
+system.
+We wish you the very best of luck in your study of operating systems.
+Contacting Us
+We have endeavored to eliminate typos, bugs, and the like from the text. But,
+as in new releases of software, bugs almost surely remain. An up-to-date errata
+list is accessible from the book’s website. We would be grateful if you would
+notify us of any errors or omissions in the book that are not on the current list
+of errata.
+We would be glad to receive suggestions on improvements to the book.
+We also welcome any contributions to the book website that could be of
+xiv Preface
+use to other readers, such as programming exercises, project suggestions,
+on-line labs and tutorials, and teaching tips. E-mail should be addressed to
+os-book-authors@cs.yale.edu.
+Acknowledgments
+This book is derived from the previous editions, the first three of which
+were coauthored by James Peterson. Others who helped us with previous
