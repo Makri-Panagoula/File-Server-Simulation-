@@ -11,7 +11,7 @@
 #include <sys/types.h> 
 #include <sys/ipc.h>
 #include <sys/wait.h>
-#include <time.h>
+#include<sys/time.h>
 #pragma once
 
 #define SEM_PERMS (S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP)
@@ -40,3 +40,6 @@ int count_lines() ;
 
 //Allocates memory and copies the current request
 request* request_t(request* cur) ;
+
+//Returns current time in milliseconds.
+long long timeInMilliseconds(void) ;

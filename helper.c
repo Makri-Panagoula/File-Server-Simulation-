@@ -18,6 +18,14 @@ int count_lines() {
     return lines;
 }
 
+//Returns current time in milliseconds.
+long long timeInMilliseconds(void) {
+    struct timeval tv;
+
+    gettimeofday(&tv,NULL);
+    return (((long long)tv.tv_sec)*1000)+(tv.tv_usec/1000);
+}
+
 char* attach_num(char* string,int num) {
     
 }

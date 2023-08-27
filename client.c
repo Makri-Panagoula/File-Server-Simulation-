@@ -36,10 +36,10 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
     int files_num = 0;
     //Array with unique files we have retrieved
     int files[L];
-    int total_delay = 0;
+    long long total_delay = 0;
     //Total time between consecutive requests
-    int time_cons = 0;
-    time_t prev_submit;
+    long long time_cons = 0;
+    long long prev_submit;
     fprintf(output,"---REQUESTS---");
 
     for(int i = 0; i < L; i++) {
@@ -80,13 +80,11 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         if(i == L-1)
             request_mem->served++;
         //Keep track of the submitting time
-        time_t submit;
-        time(&submit);
+        long long submit = timeInMilliseconds();
         //Update total time between consecutive requests
         if( i > 0 )
             time_cons += submit - prev_submit;
         prev_submit = submit;
-
         //Submit request to server    
         sem_post(server);
 
@@ -105,9 +103,8 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         }
 
         //Keep track of delays
-        time_t response;
-        time(&response);
-        total_delay+=response-submit;
+        long long response = timeInMilliseconds();
+        total_delay += response-submit;
 
         //Wait until thread is done with shared memory to delete it
         sem_wait(process_sem); 
@@ -121,10 +118,10 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
             perror_exit("Failed to delete passage!"); 
     }
     //Save statistics in output folder
-    int avg_time = time_cons / L ;              //Average time between consecutive requests
+    long long avg_time = time_cons / L ;              //Average time between consecutive requests
     fprintf(output,"\n---METRICS---\n");
     fprintf(output,
-            "Total lines returned : %d.\nTotal files retrieved : %d.\nTotal delay between submitting and receiving requests : %d.\nAverage time between consequtive requests: %d.\n",
+            "Total lines returned : %d.\nTotal files retrieved : %d.\nTotal delay between submitting and receiving requests : %lld msec.\nAverage time between consequtive requests: %lld msec.\n",
             returned_lines,files_num,total_delay,avg_time);
     fclose(output);
     exit(0);
