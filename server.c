@@ -36,30 +36,27 @@ int main (int argc, char* argv[]) {
         perror_exit("Clients sem_open failed!");  
 
     //Initialize a named semaphore for each child process and for the thread that will serve its request for IPC
-	sem_t **process = (sem_t**) malloc(N*sizeof(sem_t*));
-	sem_t **thread =  (sem_t**) malloc(N*sizeof(sem_t*));
-
-    char str_num[20];
+	sem_t** process =  malloc(N*sizeof(sem_t*));
+	sem_t** thread =  malloc(N*sizeof(sem_t*));
+    char** process_name = malloc(N*sizeof(char*));
+    char** thread_name = malloc(N*sizeof(char*));
 
     for(int i = 0; i < N; i++) {
-        char thread_name[50] ;
-        char process_name[50];
-        strcpy(process_name ,"/Process");
-        strcpy(thread_name , "/Thread");        
-        sprintf(str_num,"%d",i);
-        strcat(process_name,str_num);
-        strcat(thread_name,str_num);
 
-        if((process[i] = sem_open(process_name, O_CREAT, SEM_PERMS, 0)) == SEM_FAILED)
+        process_name[i] = attach_num("/Process",i);
+        thread_name[i] = attach_num( "/Thread",i);        
+
+        if((process[i] = sem_open(process_name[i], O_CREAT, SEM_PERMS, 0)) == SEM_FAILED)
             perror_exit("Sem_open for child process failed!"); 
 
-        if((thread[i] = sem_open(thread_name, O_CREAT, SEM_PERMS, 0)) == SEM_FAILED)
+        if((thread[i] = sem_open(thread_name[i], O_CREAT, SEM_PERMS, 0)) == SEM_FAILED)
             perror_exit("Sem_open for thread failed!");                    
     }
 
     //Create N clients - child processes
     pid_t pids[N];
     pthread_t t_ids[N*L];
+    int thread_num = 0;
 
     for(int i = 0; i < N; i++) {
 
@@ -68,7 +65,6 @@ int main (int argc, char* argv[]) {
         else if (pids[i] == 0 )                 //Child Process
             child(lines,K,L,lambda,i+1,clients,server,process[i],thread[i],request_mem);
     }
-    int thread_num = 0;
 
     while( request_mem->served < N ) {
         //Wait until you get a request from a client
@@ -96,8 +92,9 @@ int main (int argc, char* argv[]) {
 
     // Delete request shared memory object
     if ( shmctl(request_id , IPC_RMID , 0) == -1 ) 
-        perror_exit("Failed to delete request shared memory object!");   
+        perror_exit("Failed to delete request shared memory object!");
 
+    //Close and unlink all the named semaphores
     if(sem_close(clients) < 0)
         perror_exit("Clients sem_close failed!");
 
@@ -111,29 +108,25 @@ int main (int argc, char* argv[]) {
         perror_exit("Server sem_unlink failed!");    
 
     for(int i = 0; i < N; i++) {
-        
-        char thread_name[50] ;
-        char process_name[50];
-        strcpy(process_name ,"/Process");
-        strcpy(thread_name , "/Thread");
-        sprintf(str_num,"%d",i);
-        strcat(process_name,str_num);
-        strcat(thread_name,str_num);
 
         if(sem_close(process[i]) < 0)
             perror_exit("Sem_close failed!");  
 
-        if(sem_unlink(process_name) < 0)
+        if(sem_unlink(process_name[i]) < 0)
             perror_exit("Sem_unlink for process_name failed!");        
 
         if(sem_close(thread[i]) < 0)
             perror_exit("Sem_close failed!");  
 
-        if(sem_unlink(thread_name) < 0) {
-            printf("%s\n",thread_name);
+        if(sem_unlink(thread_name[i]) < 0) 
             perror_exit("Sem_unlink for thread_name failed!");                
-        }
+
+        free(process_name[i]);
+        free(thread_name[i]);
     }
+    //Deallocate memory
+    free(process_name);
+    free(thread_name);    
     free(process);
     free(thread);
     return 0;

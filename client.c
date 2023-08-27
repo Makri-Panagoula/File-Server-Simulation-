@@ -24,11 +24,7 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
     unsigned int curtime = time(NULL);      
     srand((unsigned int) (curtime + getpid()));
     //Open output file for given process
-    char output_file[] = "output_";
-    char str_num[20];
-    sprintf(str_num,"%d",process_num);
-    strcat(output_file,str_num);
-    strcat(output_file,".txt");    
+    char* output_file = attach_num("output_",process_num); 
     FILE*  output = fopen(output_file,"w");    
     //Number of lines the client has retrieved until the end of all of his requests
     int returned_lines = 0;
@@ -63,9 +59,6 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         if (passage == (void*)-1) 
             perror_exit("Attachment of passage failed in client!");         
 
-        //Time between submitting the requests follows exponential distribution
-        sleep(Exp(lambda,i));
-
         //Exclude other clients' access to the shared memory object while we update its value
         sem_wait(clients);
        
@@ -85,6 +78,7 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         if( i > 0 )
             time_cons += submit - prev_submit;
         prev_submit = submit;
+
         //Submit request to server    
         sem_post(server);
 
@@ -116,6 +110,9 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         // Delete passage shared memory object
         if ( shmctl(passage_id , IPC_RMID , 0) == -1 ) 
             perror_exit("Failed to delete passage!"); 
+
+        //Time between the requests follows exponential distribution
+        sleep(Exp(lambda,i));            
     }
     //Save statistics in output folder
     long long avg_time = time_cons / L ;              //Average time between consecutive requests
@@ -123,6 +120,8 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
     fprintf(output,
             "Total lines returned : %d.\nTotal files retrieved : %d.\nTotal delay between submitting and receiving requests : %lld msec.\nAverage time between consequtive requests: %lld msec.\n",
             returned_lines,files_num,total_delay,avg_time);
+            
     fclose(output);
+    free(output_file);
     exit(0);
 }

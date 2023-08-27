@@ -43,3 +43,6 @@ request* request_t(request* cur) ;
 
 //Returns current time in milliseconds.
 long long timeInMilliseconds(void) ;
+
+//Allocates memory for a string that concatenates string with num
+char* attach_num(char* string,int num);

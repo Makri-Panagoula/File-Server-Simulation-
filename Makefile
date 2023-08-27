@@ -17,4 +17,4 @@ run : $(SERVER)
 	./$(SERVER) 4 4 10 2 
 
 clean:
-	rm -f $(OBJ) $(SERVER) output_*.txt
+	rm -f $(OBJ) $(SERVER) output_* .nfs*

@@ -27,7 +27,13 @@ long long timeInMilliseconds(void) {
 }
 
 char* attach_num(char* string,int num) {
-    
+
+    char* to_return = malloc(50 * sizeof(char));
+    strcpy(to_return ,string);
+    char str_num[20];
+    sprintf(str_num,"%d",num);
+    strcat(to_return,str_num);    
+    return to_return;
 }
 //Allocates memory and copies the current request
 request* request_t(request* cur) {
