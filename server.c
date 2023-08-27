@@ -36,8 +36,8 @@ int main (int argc, char* argv[]) {
         perror_exit("Clients sem_open failed!");  
 
     //Initialize a named semaphore for each child process and for the thread that will serve its request for IPC
-	sem_t** process =  malloc(N*sizeof(sem_t*));
-	sem_t** thread =  malloc(N*sizeof(sem_t*));
+	sem_t** process = malloc(N*sizeof(sem_t*));
+	sem_t** thread = malloc(N*sizeof(sem_t*));
     char** process_name = malloc(N*sizeof(char*));
     char** thread_name = malloc(N*sizeof(char*));
 
@@ -66,9 +66,11 @@ int main (int argc, char* argv[]) {
             child(lines,K,L,lambda,i+1,clients,server,process[i],thread[i],request_mem);
     }
 
+    //Repeat until you have served all the clients
     while( request_mem->served < N ) {
         //Wait until you get a request from a client
         sem_wait(server);      
+        //Copy the shared memory's information into a new pointer
         request* thread_arg = request_t(request_mem);   
         //Create thread
         pthread_t new_thread;
@@ -77,6 +79,7 @@ int main (int argc, char* argv[]) {
         //Current request is read we can move on to reading the next one => allow next client to write on shared memory         
         sem_post(clients);
     }  
+
     int status;
     //Collect children that have finished
     for(int i = 0; i < N; i++)
@@ -141,10 +144,7 @@ void* process_request(void* arg) {
         perror_exit((char*)"Attachment of passage failed in server!");
 
     //Open wanted file given file number
-    char file_name[] = "SERVER_FILES/file_";
-    char str_num[20];
-    sprintf(str_num,"%d",request_t->file_num);
-    strcat(file_name,str_num);
+    char* file_name = attach_num("SERVER_FILES/file_",request_t->file_num);
     strcat(file_name,".txt");
     FILE*  file = fopen(file_name,"r");
     char * copy = NULL;
@@ -161,7 +161,8 @@ void* process_request(void* arg) {
         sem_wait(request_t->thread_sem);                  
         getline(&copy,&len,file);
         strcpy(passage,copy);                       
-    }        
+    }   
+    free(file_name);     
     free(copy);
     fclose(file);  
     // Detach passage shared memory object since we are done with copying

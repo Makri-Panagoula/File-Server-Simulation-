@@ -1,14 +1,14 @@
 #include "helper.h"
 #include <math.h>
 
-//Exponential distribution function : f(x;λ) = λ * e ^(-λx).X is the number of request. 
+//Exponential distribution function : f(x;λ) = λ * e ^(-λx),where X is the number of request. 
 int Exp(int lambda,int X) {
     if ( !X)                   //First request of each client should be happening instantly
         return(0);
     return (lambda * exp(X*(-lambda)));
 }
 
-//Updates files array with new file if it isn't already retrieved and value of number acccordingly
+//Updates files array with new file if it isn't already retrieved and value of number accordingly
 void update_files(int files[],int* number ,int requested) {
 
     for(int i = 0; i < *number; i++) {
@@ -40,7 +40,7 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
 
     for(int i = 0; i < L; i++) {
 
-        //Pick randomly a file number , a beginning line and the number of lines in the passage
+        //Pick randomly a file number,a beginning line and the number of lines in the passage
         int start = rand() % (lines - 1) + 1;
         int wanted = rand() % (lines - start) + 1;
         int ending = start + wanted - 1;
@@ -49,8 +49,8 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         returned_lines += wanted;
         update_files(files,&files_num,file_num);
 
-        //Create shared memory where the request is gonna be copied
-        int passage_id = shmget(IPC_PRIVATE,BLOCK_SIZE *sizeof(char),0666);
+        //Create shared memory where the request is gonna be copied,(size should be that of a line)
+        int passage_id = shmget(IPC_PRIVATE,BLOCK_SIZE*sizeof(char),0666);
         if (passage_id == -1)
             perror_exit("Creation of passage shared memory object failed!");
 
@@ -69,7 +69,7 @@ void child(int lines,int K,int L,int lambda,int process_num, sem_t* clients,sem_
         request_mem->shm_id = passage_id;      
         request_mem->process_sem = process_sem;
         request_mem->thread_sem = thread_sem;      
-        //If this is client's last request, server has received all requests of this client 
+        //If this is client's last request, server has received all requests of this client,so one more child is served. 
         if(i == L-1)
             request_mem->served++;
         //Keep track of the submitting time
