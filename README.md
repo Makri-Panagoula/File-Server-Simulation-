@@ -1,8 +1,23 @@
-General admissions made:
-The command line arguments must be given in the following order : N (number of client-processes) , L (number of requests per client process) , K (number of files accessible to the file server) and lambda (parameter for the exponential distribution which the time between requests follows).The client submits its request choosing a file number,beginning line, ending line(we include the ending line in the request as well) while creating a shared memory in the size of a line(block).The client creates a unique shared memory for every request which is deleted once it is served.The request is submitted to server through a shared memory struct ,"request" (check helper.h), which other than the request's information includes two semaphores for communication between writer(thread) and reader (child process). For checking accuracy in requests and viewing their metrics, we create an output folder for every child process in the format output_i , i in [1,N], containing this information. Requests in this file are stored in the format : Beginning Line - Ending Line from File Number and at the end of the file the metrics can be found.The metrics include total lines returned from server,unique files retrieved, total delay between submitting and getting response to a request and average time between consecutive requests.Time between requests follows exponential distribution.The system files from where the information will be retrieved must be stored in the format file_i.txt , i in [1,K] , stored in SERVER_FILES directory.For simplicity, we work with 10 files each having 100 lines,but any number of files or lines would work.The maximum line size (aka BLOCK_SIZE) is arbitrarily chosen in 1024 ,which is a big enough number for every reasonable sentence.Each of the K files must have the same number of lines.
+# File-Server-Simulation
 
-Synchronizing & Shared Memory:
-In order to ensure mutual exclusion in the "request" shared memory and proper communication between parent(reader) and children(writers), we use the named semaphores : "server" ,initialized in 0 and "clients" ,initialized in 1. We,also, need to synchronize every child process (reader in shared memory) with its responding serving thread(writer in shared memory) , therefore we create two named semaphore arrays (of size N) : "process" and "thread" initialized in 0.The semaphores corresponing to each process are passed as arguments in child function and they are saved in the request struct every time one is submitted so that the thread can access them as well.The thread returns only one line at a time until client has all the requested ones. The server merely reads the requests and creates a thread which will do all the actual work.
+Our goal in this assignment is to develop a system of processes to simulate the functionality of a file server such that the client processes will randomly choose a file out of the available ones in the system and demand a certain number of lines and upon the completion of all of its requests metrics regarding the system's service are presented.
+## General Admissions
+
+- Each of the N clients submits L requests.
+- FS creates a thread for every request it receives.
+- The thread returns only one line at a time until client has all the requested ones.
+- The server merely reads the requests and creates a thread which will do all the actual work.
+- The submission of the request to the FS is done through a shared memory segment which is created once in the beginning and deleted only upon completion of the program.
+- Before submitting the request the client process creates another temporary shared memory segment through which it will get the wanted passage.This space is fixed and equal to the maximum size of a line.This segment is deleted upon completion of request by client.
+ - Between the submission of each client's request there is an exponentially distributed time given a parameter λ.
+- The K available files have the same number of lines and are saved in the SERVER_FILES directory in the format file_i.txt , i in [1,K] . 
+- Each output_i file for every child process i stores every request information in the format:
+  Beginning Line - Ending Line from File Number . At the end of the file the total lines returned from server,unique files retrieved, total delay between submitting and getting response to a request and average time between consecutive requests are stored.
+- N,K,L,λ are command line arguments.
+
+## Synchronizing & Shared Memory
+ To ensure mutual exclusion we use the named semaphores : "server" ,initialized in 0 and "clients" ,initialized in 1. We,also, need to synchronize every child process (reader in shared memory) with its responding serving thread(writer in shared memory) , therefore we create two named semaphore arrays (of size N) : "process" and "thread" initialized in 0. 
 All semaphores are initialized in parent process (server.c) before the fork.
 
-Disclaimer : 4 is the minimum grade I need in the assignment to pass the class, so please keep that in mind :).
+## Usage
+Run with make run. Arguments must be provided in the order; N L K λ
