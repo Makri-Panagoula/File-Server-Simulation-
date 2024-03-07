@@ -1,4 +1,4 @@
-#include "helper.h"
+#include "../headers/helper.h"
 #include <math.h>
 
 //Exponential distribution function : f(x;λ) = λ * e ^(-λx),where X is the number of request. 

@@ -1,14 +1,16 @@
 # Compiler
 CC = gcc
+HEADERS = ../headers
+SRC = ./source
 
 # Compile Options
-CFLAGS = -I -g -pthread 
+CFLAGS = -I -g -pthread -I$(HEADERS)
 
 # make server
 SERVER = server
 
 # Object files 
-OBJ = server.o helper.o client.o
+OBJ = $(SRC)/server.o $(SRC)/helper.o $(SRC)/client.o
 
 $(SERVER) : $(OBJ) 
 	$(CC) $(CFLAGS) $(OBJ) -o $(SERVER)  -lrt -lm

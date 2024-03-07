@@ -1,4 +1,4 @@
-#include "helper.h"
+#include "../headers/helper.h"
 
 void child(int ,int ,int ,int ,int ,sem_t*,sem_t* ,sem_t*,sem_t* ,request* ) ;
 void* process_request(void* );
